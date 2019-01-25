@@ -33,31 +33,25 @@ namespace TextSplitter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //var reader = File.OpenText("C:\\Users\\Jeremy\\Desktop\\es\\es-stdout.2019-01-15.log");
-            //if (outPath = "")
-
-            var reader = File.OpenText(sFileName);
-            //string outFileName = "file{0}.txt";
+            StreamReader reader = File.OpenText(sFileName);
+            //Path for output directory and formated file name.
             string outFileName = outPath + "\\file{0}.txt";
             int outFileNumber = 1;
-            //const int MAX_LINES = 1500000;
             if (textBox3.Text == "")
             {
                 MessageBox.Show(textBox3.Text + "No Value provided, using default line count (500,000).");
                 MAX_LINES_USER = MAX_LINES_DEFAULT;
-                MessageBox.Show(Convert.ToString("Line break = " + MAX_LINES_USER));
+                //MessageBox.Show(Convert.ToString("Line break = " + MAX_LINES_USER));
             }
             else
             {
                 MAX_LINES_USER = Convert.ToInt32(textBox3.Text);
-                MessageBox.Show(Convert.ToString(MAX_LINES_USER));
+                //MessageBox.Show(Convert.ToString(MAX_LINES_USER));
             }
             
             while (!reader.EndOfStream)
             {
-                //var writer = File.CreateText(string.Format(outFileName, outFileNumber++));
-                
-                var writer = File.CreateText(string.Format(outFileName, outFileNumber++));
+                StreamWriter writer = File.CreateText(string.Format(outFileName, outFileNumber++));
                 for (int idx = 0; idx < MAX_LINES_USER; idx++)
                 {
                     writer.WriteLine(reader.ReadLine());
@@ -67,7 +61,7 @@ namespace TextSplitter
             }
             reader.Close();
 
-            MessageBox.Show("Split completed.");
+            MessageBox.Show("File Split completed.");
         }
 
         private void button3_Click(object sender, EventArgs e)
